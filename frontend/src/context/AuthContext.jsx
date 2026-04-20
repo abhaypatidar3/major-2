@@ -1,5 +1,10 @@
-import { createContext, useContext, useEffect, useState } from "react";
-import { getProfile, loginUser, logoutUser, registerUser } from "../services/api";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import {
+  getProfile,
+  loginUser,
+  logoutUser,
+  registerUser,
+} from "../services/api";
 
 const AuthContext = createContext();
 
@@ -45,13 +50,24 @@ export const AuthProvider = ({ children }) => {
     setIsAuthenticated(false);
   };
 
+  const contextValue = useMemo(
+    () => ({
+      user,
+      setUser,
+      isAuthenticated,
+      loading,
+      login,
+      register,
+      logout,
+      fetchUser,
+    }),
+    [user, isAuthenticated, loading],
+  );
+
   return (
-    <AuthContext.Provider
-      value={{ user, isAuthenticated, loading, login, register, logout }}
-    >
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
   );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => useContext(AuthContext);

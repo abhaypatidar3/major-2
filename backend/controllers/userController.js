@@ -23,7 +23,12 @@ export const register = catchAsyncErrors(async (req, res, next) => {
     $or: [{ emailaddress }, { username }],
   });
   if (isRegistered) {
-    return next(new ErrorHandler("User already registered with this email or username", 400));
+    return next(
+      new ErrorHandler(
+        "User already registered with this email or username",
+        400,
+      ),
+    );
   }
 
   const user = await User.create({
@@ -76,6 +81,63 @@ export const getProfile = catchAsyncErrors(async (req, res, next) => {
   const user = req.user;
   res.status(200).json({
     success: true,
+    user,
+  });
+});
+
+export const updateProfile = catchAsyncErrors(async (req, res, next) => {
+  const {
+    city,
+    lastPeriodStartDate,
+    avgCycleLength,
+    periodDuration,
+    cycleRegularity,
+    Medical_Conditions,
+    currentMedications,
+  } = req.body;
+
+  const updatedFields = {};
+
+  if (city !== undefined) updatedFields.city = String(city).trim();
+  if (lastPeriodStartDate !== undefined && lastPeriodStartDate !== "") {
+    updatedFields.lastPeriodStartDate = lastPeriodStartDate;
+  }
+  if (avgCycleLength !== undefined && avgCycleLength !== "") {
+    updatedFields.avgCycleLength = Number(avgCycleLength);
+  }
+  if (periodDuration !== undefined && periodDuration !== "") {
+    updatedFields.periodDuration = Number(periodDuration);
+  }
+  if (cycleRegularity !== undefined && cycleRegularity !== "") {
+    updatedFields.cycleRegularity = cycleRegularity;
+  }
+  if (Medical_Conditions !== undefined && Array.isArray(Medical_Conditions)) {
+    const seen = new Set();
+    updatedFields.Medical_Conditions = Medical_Conditions.map((d) =>
+      String(d).trim(),
+    )
+      .filter((d) => d.length > 0)
+      .filter((d) => {
+        const key = d.toLowerCase();
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      })
+      .slice(0, 50);
+  }
+  if (currentMedications !== undefined) {
+    updatedFields.currentMedications =
+      currentMedications === true || currentMedications === "true";
+  }
+
+  const user = await User.findByIdAndUpdate(req.user._id, updatedFields, {
+    new: true,
+    runValidators: true,
+  });
+
+  res.status(200).json({
+    success: true,
+    message: "Profile updated successfully",
     user,
   });
 });

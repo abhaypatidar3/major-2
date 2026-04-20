@@ -5,7 +5,7 @@
 
 .sai-page {
   display: flex;
-  height: 100vh;
+  height: 88vh;
   font-family: var(--text-font);
   background: #f5f0ff;
   overflow: hidden;
