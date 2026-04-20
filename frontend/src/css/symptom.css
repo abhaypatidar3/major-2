@@ -1,0 +1,231 @@
+:root {
+  --bgpurple: rgb(133, 118, 235);
+  --bgpurple2: rgba(224, 52, 227, 0.667);
+  --bgpink: #F8E7FC;
+  --textblack: rgb(10, 10, 10);
+  --textpurple: rgb(133, 118, 235);
+  --textwhite: white;
+  --text-font: "Outfit", sans-serif;
+  --cardcolor: linear-gradient(
+    rgba(150, 132, 241, 0.9),
+    rgba(159, 148, 229, 0.5),
+    rgba(225, 77, 156, 0.7)
+  );
+}
+
+.solution-card-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+}
+
+.symptom-card {
+  border: none !important;
+  color: var(--textwhite) !important;
+  box-shadow: 10px 10px 20px rgba(134, 129, 129, 0.566);
+  border-radius: 10px;
+  height: 200px !important;
+  width: 10rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+  margin-bottom: 50px;
+  margin-top: 50px;
+  position: relative;
+}
+
+.symptom-card .symptom-img-box {
+  width: 10rem;
+  border-radius: 10px 10px 0 0;
+  height: 200px;
+}
+
+.symptom-card img {
+  border-radius: 10px 10px 0 0;
+  width: 10rem;
+  height: 200px;
+  object-fit: cover;
+}
+
+.symptom-card .card-body .card-text {
+  font-size: 20px;
+  color: var(--textwhite);
+  background-color: var(--bgpurple);
+  text-align: center;
+  border-radius: 0 0 10px 10px;
+  padding: 5px;
+  width: 10rem;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.symptom-card .card-body .card-text:hover {
+  color: var(--bgpurple);
+  background-color: var(--bgpink);
+}
+
+.symptom-title-link {
+  text-decoration: none;
+}
+
+/* show.ejs / SymptomDetail page */
+.main-container {
+  display: flex;
+}
+
+.aside {
+  background: var(--bgpurple) !important;
+  width: 20vw !important;
+  position: fixed;
+  left: 0;
+  right: 0;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  gap: 3rem;
+  z-index: 10;
+  border-right: 1px solid var(--textblack);
+}
+
+.aside .solutions {
+  font-size: 40px;
+  color: var(--textwhite);
+  padding-top: 15px;
+}
+
+.aside .nav {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  font-size: 16px;
+  gap: 2rem;
+  list-style: none;
+  padding: 0;
+}
+
+.aside .nav li {
+  padding: 15px;
+  display: flex;
+  flex-direction: row;
+  width: 20vw;
+  transition: 1.5s all ease-in-out;
+}
+
+.aside .nav li a:hover {
+  transform: scale(1.01);
+  color: var(--bgpink);
+  text-decoration: underline;
+}
+
+.aside .nav li a {
+  font-size: 22px;
+  text-decoration: none;
+  color: var(--textblack);
+  font-weight: 600;
+}
+
+.aside .nav li a i {
+  font-size: 30px;
+  margin-right: 10px;
+}
+
+.main-content {
+  width: 91vw;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-left: 220px;
+  gap: 2rem;
+}
+
+.main-content .sol-heading {
+  font-size: 70px;
+  color: var(--textpurple);
+  margin-top: 20px;
+}
+
+.main-content #remedies, .main-content #medicine, .main-content #herbal, .main-content #diet {
+  padding-top: 120px;
+  width: 98%;
+}
+
+.main-content #yoga {
+  padding-top: 20px;
+  width: 98%;
+}
+
+.section {
+  background: linear-gradient(67deg, #ac7cf4, #F8E7FC);
+  width: 100%;
+  box-shadow: 0 0 20px rgb(177, 175, 177);
+  border-radius: 10px;
+  margin-bottom: 30px;
+}
+
+.section h3 {
+  color: white;
+  font-size: 40px;
+  background-color: var(--bgpurple);
+  text-align: center;
+  border-radius: 10px 10px 0 0;
+  border-bottom: 2px solid purple;
+}
+
+.padd-15 {
+  padding-left: 15px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.section .ul-box {
+  list-style-type: "⭐";
+}
+
+.section .li-box {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-bottom: 50px;
+}
+
+.section .li-box .content-box {
+  width: 80%;
+  margin-bottom: 10px;
+}
+
+.section .li-box .img-box {
+  align-items: center;
+  width: 40%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.section .li-box .img-box img {
+  border-radius: 20px;
+  border: 4px solid var(--bgpurple);
+}
+
+.section .li-box h4 {
+  color: var(--textblack);
+  margin-bottom: 10px;
+  font-size: 40px;
+}
+
+.section .li-box p {
+  font-size: 25px;
+}
+
+.section .li-box p strong {
+  font-size: 30px !important;
+  color: var(--bgpurple);
+  text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+}
