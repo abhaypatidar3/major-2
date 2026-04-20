@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 export const connection = () => {
   const primaryMongoUrl = process.env.MONGO_URL;
   const localMongoUrl =
-    process.env.LOCAL_MONGO_URL || "mongodb://127.0.0.1:27017";
+    process.env.MONGO_URL || "mongodb://127.0.0.1:27017";
   const dbName = process.env.MONGO_DB_NAME || "SYNCORA_TWO";
 
   if (!primaryMongoUrl) {

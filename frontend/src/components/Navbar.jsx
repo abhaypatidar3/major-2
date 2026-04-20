@@ -29,15 +29,31 @@ const Navbar = () => {
         </button>
         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div className="navbar-nav">
-            <Link className="nav-link" to="/home">Home</Link>
-            <Link className="nav-link" to="/services">Services</Link>
-            <Link className="nav-link" to="/community">Community</Link>
+            <Link className="nav-link" to="/home">
+              Home
+            </Link>
+            <Link className="nav-link" to="/services">
+              Services
+            </Link>
+            <Link className="nav-link" to="/community">
+              Community
+            </Link>
             {isAuthenticated ? (
-              <button className="nav-link btn-link" onClick={handleLogout}>
-                Logout
-              </button>
+              <>
+                <Link className="nav-link" to="/find-gynaecologists">
+                  Find Gynaecologists
+                </Link>
+                <Link className="nav-link" to="/profile">
+                  Profile
+                </Link>
+                <button className="nav-link btn-link" onClick={handleLogout}>
+                  Logout
+                </button>
+              </>
             ) : (
-              <Link className="nav-link" to="/login">Login</Link>
+              <Link className="nav-link" to="/login">
+                Login
+              </Link>
             )}
           </div>
         </div>

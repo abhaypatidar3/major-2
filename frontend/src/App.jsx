@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import FlashMessage from "./components/FlashMessage";
 import Navbar from "./components/Navbar";
@@ -15,6 +20,8 @@ import SymptomDetail from "./pages/SymptomDetail";
 import Education from "./pages/Education";
 import Community from "./pages/Community";
 import SyncoraAI from "./pages/SyncoraAI";
+import Profile from "./pages/Profile";
+import FindGynaecologists from "./pages/FindGynaecologists";
 
 const AppLayout = () => {
   const location = useLocation();
@@ -29,7 +36,14 @@ const AppLayout = () => {
       <Navbar />
       <div className="container">
         <Routes>
-          <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+          <Route
+            path="/home"
+            element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/readmore" element={<ReadMore />} />
@@ -39,7 +53,30 @@ const AppLayout = () => {
           <Route path="/symptoms/:id" element={<SymptomDetail />} />
           <Route path="/education" element={<Education />} />
           <Route path="/community" element={<Community />} />
-          <Route path="/syncora-ai" element={<ProtectedRoute><SyncoraAI /></ProtectedRoute>} />
+          <Route
+            path="/find-gynaecologists"
+            element={
+              <ProtectedRoute>
+                <FindGynaecologists />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/syncora-ai"
+            element={
+              <ProtectedRoute>
+                <SyncoraAI />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </div>
       <Footer />

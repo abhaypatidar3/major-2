@@ -8,6 +8,7 @@ import { errorMiddleware } from "./middlewares/error.js";
 import userRoute from "./router/userRoute.js";
 import symptomRoute from "./router/symptomRoute.js";
 import aiRoute from "./router/aiRoute.js";
+import gynaecologistRoute from "./router/gynaecologistRoute.js";
 
 config({ path: "./config/config.env" });
 
@@ -18,7 +19,7 @@ app.use(
     origin: process.env.FRONTEND_URL,
     methods: ["POST", "PUT", "GET", "DELETE"],
     credentials: true,
-  })
+  }),
 );
 
 app.use(cookieParser());
@@ -28,7 +29,7 @@ app.use(
   fileUpload({
     useTempFiles: true,
     tempFileDir: "/tmp/",
-  })
+  }),
 );
 
 connection();
@@ -36,6 +37,7 @@ connection();
 app.use("/api/v1/user", userRoute);
 app.use("/api/v1/symptoms", symptomRoute);
 app.use("/api/v1/ai", aiRoute);
+app.use("/api/v1/gynaecologists", gynaecologistRoute);
 
 app.use(errorMiddleware);
 

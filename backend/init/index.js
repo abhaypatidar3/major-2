@@ -1,14 +1,25 @@
 import mongoose from "mongoose";
-import sampleSolution from './solutionData.js'
+import { config } from "dotenv";
+import sampleSolution from "./solutionData.js";
 import { SymptomSolution } from "../models/symptomSolutionSchema.js";
 import { connection } from "../database/connection.js";
 
-connection();
+config({ path: "./config/config.env" });
 
-const initDB = async()=>{
+const initDB = async () => {
+  try {
+    connection();
     await SymptomSolution.deleteMany({});
-    await SymptomSolution.insertMany(sampleSolution.data);
-    console.log("Data is initialized");
-}
+    const inserted = await SymptomSolution.insertMany(sampleSolution.data);
+    console.log(
+      `Data initialized successfully. Inserted ${inserted.length} symptoms.`,
+    );
+  } catch (error) {
+    console.error("Failed to initialize symptom data:", error.message);
+    process.exitCode = 1;
+  } finally {
+    await mongoose.disconnect();
+  }
+};
 
 initDB();
