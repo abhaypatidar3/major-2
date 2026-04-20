@@ -1,0 +1,451 @@
+/* ============================================
+   SyncoraAI — ChatGPT-style Chat Page
+   Theme: Purple #8576EB + Pink #F8E7FC
+   ============================================ */
+
+.sai-page {
+  display: flex;
+  height: 100vh;
+  font-family: var(--text-font);
+  background: #f5f0ff;
+  overflow: hidden;
+}
+
+/* ── Sidebar ──────────────────────────────── */
+.sai-sidebar {
+  width: 280px;
+  background: linear-gradient(180deg, rgb(133,118,235) 0%, rgba(160,100,220,0.97) 60%, rgba(225,77,156,0.92) 100%);
+  display: flex;
+  flex-direction: column;
+  padding: 1.8rem 1.4rem;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.sai-sidebar::before {
+  content: "";
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+  top: -60px;
+  right: -70px;
+  pointer-events: none;
+}
+
+.sai-sidebar-top {
+  margin-bottom: 2rem;
+}
+
+.sai-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.sai-brand-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.sai-brand h2 {
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 800;
+  margin: 0;
+  letter-spacing: 0.2px;
+}
+
+.sai-brand p {
+  color: rgba(255,255,255,0.7);
+  font-size: 0.78rem;
+  margin: 0.15rem 0 0;
+}
+
+.sai-sidebar-info {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.sai-sidebar-info h4 {
+  color: rgba(255,255,255,0.85);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.8px;
+  margin: 0 0 0.8rem;
+}
+
+.sai-sidebar-info ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.sai-sidebar-info li {
+  color: rgba(255,255,255,0.78);
+  font-size: 0.85rem;
+  padding: 0.55rem 0.9rem;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.09);
+  border: 1px solid rgba(255,255,255,0.12);
+  transition: background 0.2s;
+}
+
+.sai-sidebar-info li:hover {
+  background: rgba(255,255,255,0.16);
+}
+
+.sai-sidebar-bottom {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255,255,255,0.18);
+}
+
+.sai-back-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: rgba(255,255,255,0.82);
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 0.5rem 0.6rem;
+  border-radius: 10px;
+  transition: all 0.2s;
+}
+
+.sai-back-btn:hover {
+  background: rgba(255,255,255,0.14);
+  color: #fff;
+}
+
+/* ── Main Chat ────────────────────────────── */
+.sai-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  position: relative;
+}
+
+/* Top bar (visible on mobile, hidden on desktop) */
+.sai-topbar {
+  display: none;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.8rem 1.2rem;
+  background: rgb(133,118,235);
+  color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.sai-topbar-back {
+  color: #fff;
+  font-size: 1rem;
+  display: flex;
+}
+
+.sai-topbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 800;
+  font-size: 1rem;
+  flex: 1;
+}
+
+.sai-topbar-status {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.8);
+}
+
+.sai-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #4ade80;
+  animation: dotPulse 2s ease-in-out infinite;
+}
+
+@keyframes dotPulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+/* Messages container */
+.sai-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 2rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.sai-messages::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sai-messages::-webkit-scrollbar-thumb {
+  background: rgba(133,118,235,0.2);
+  border-radius: 10px;
+}
+
+/* Message row */
+.sai-msg {
+  display: flex;
+  gap: 0.8rem;
+  max-width: 75%;
+  animation: msgSlide 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes msgSlide {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.sai-msg-user {
+  align-self: flex-end;
+  flex-direction: row-reverse;
+}
+
+.sai-msg-ai {
+  align-self: flex-start;
+}
+
+/* Avatar */
+.sai-msg-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+}
+
+.sai-msg-ai .sai-msg-avatar {
+  background: linear-gradient(135deg, rgb(133,118,235), rgba(225,77,156,0.85));
+  color: #fff;
+  box-shadow: 0 3px 12px rgba(133,118,235,0.25);
+}
+
+.sai-msg-user .sai-msg-avatar {
+  background: #e8e3ff;
+  color: rgb(133,118,235);
+}
+
+/* Bubble */
+.sai-msg-bubble {
+  border-radius: 20px;
+  padding: 1rem 1.3rem;
+  line-height: 1.65;
+  font-size: 0.92rem;
+}
+
+.sai-msg-ai .sai-msg-bubble {
+  background: #fff;
+  color: #3d3456;
+  border: 1px solid rgba(133,118,235,0.1);
+  border-top-left-radius: 6px;
+  box-shadow: 0 2px 16px rgba(133,118,235,0.08);
+}
+
+.sai-msg-user .sai-msg-bubble {
+  background: linear-gradient(135deg, rgb(133,118,235), rgba(160,100,220,0.95));
+  color: #fff;
+  border-top-right-radius: 6px;
+  box-shadow: 0 4px 18px rgba(133,118,235,0.28);
+}
+
+.sai-msg-text strong {
+  font-weight: 700;
+  color: rgb(133,118,235);
+}
+
+.sai-msg-user .sai-msg-text strong {
+  color: #ffe0f7;
+}
+
+/* Typing indicator */
+.sai-typing {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0.2rem 0;
+}
+
+.sai-typing span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgb(133,118,235);
+  animation: typingBounce 1.4s ease-in-out infinite;
+}
+
+.sai-typing span:nth-child(2) {
+  animation-delay: 0.16s;
+}
+
+.sai-typing span:nth-child(3) {
+  animation-delay: 0.32s;
+}
+
+@keyframes typingBounce {
+  0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+  40%            { transform: scale(1); opacity: 1; }
+}
+
+/* Quick prompts */
+.sai-quick-prompts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  padding: 0 2.5rem 1rem;
+  justify-content: center;
+}
+
+.sai-quick-btn {
+  background: #fff;
+  border: 1.5px solid rgba(133,118,235,0.25);
+  color: rgb(133,118,235);
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0.5rem 1.1rem;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  font-family: var(--text-font);
+}
+
+.sai-quick-btn:hover {
+  background: rgb(133,118,235);
+  color: #fff;
+  border-color: rgb(133,118,235);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(133,118,235,0.28);
+}
+
+/* Input bar */
+.sai-input-bar {
+  padding: 0.8rem 2.5rem 1rem;
+  border-top: 1px solid rgba(133,118,235,0.1);
+  background: #f5f0ff;
+}
+
+.sai-input-wrap {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.6rem;
+  background: #fff;
+  border: 2px solid rgba(133,118,235,0.2);
+  border-radius: 20px;
+  padding: 0.55rem 0.7rem 0.55rem 1.2rem;
+  transition: border-color 0.25s;
+  box-shadow: 0 4px 20px rgba(133,118,235,0.08);
+}
+
+.sai-input-wrap:focus-within {
+  border-color: rgb(133,118,235);
+  box-shadow: 0 4px 28px rgba(133,118,235,0.16);
+}
+
+.sai-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 0.95rem;
+  font-family: var(--text-font);
+  color: #2d2047;
+  resize: none;
+  max-height: 120px;
+  line-height: 1.5;
+  padding: 0.3rem 0;
+  background: transparent;
+}
+
+.sai-input::placeholder {
+  color: #b5afc8;
+}
+
+.sai-send-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  border: none;
+  background: #e0dbf5;
+  color: #b0a8d0;
+  font-size: 0.95rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.25s ease;
+}
+
+.sai-send-btn.active {
+  background: linear-gradient(135deg, rgb(133,118,235), rgba(225,77,156,0.9));
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(133,118,235,0.35);
+}
+
+.sai-send-btn.active:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 20px rgba(133,118,235,0.45);
+}
+
+.sai-disclaimer {
+  text-align: center;
+  font-size: 0.72rem;
+  color: #a09ab5;
+  margin: 0.5rem 0 0;
+}
+
+/* ── Responsive ───────────────────────────── */
+@media (max-width: 768px) {
+  .sai-sidebar {
+    display: none;
+  }
+
+  .sai-topbar {
+    display: flex;
+  }
+
+  .sai-messages {
+    padding: 1.2rem 1rem;
+  }
+
+  .sai-msg {
+    max-width: 88%;
+  }
+
+  .sai-quick-prompts {
+    padding: 0 1rem 0.8rem;
+  }
+
+  .sai-input-bar {
+    padding: 0.6rem 1rem 0.8rem;
+  }
+}
