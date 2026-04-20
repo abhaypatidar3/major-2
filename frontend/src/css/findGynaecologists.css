@@ -1,0 +1,249 @@
+.gyn-page {
+  padding: 0 0 2rem;
+}
+
+.gyn-hero {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0 0 34px 34px;
+  padding: 2.4rem 1.25rem 2.1rem;
+  background: linear-gradient(
+    135deg,
+    rgb(133, 118, 235) 0%,
+    rgba(164, 108, 230, 0.95) 47%,
+    rgba(225, 77, 156, 0.9) 100%
+  );
+}
+
+.gyn-hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      circle at 85% 15%,
+      rgba(255, 255, 255, 0.15) 0%,
+      transparent 42%
+    ),
+    radial-gradient(
+      circle at 10% 80%,
+      rgba(255, 255, 255, 0.12) 0%,
+      transparent 48%
+    );
+}
+
+.gyn-hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 760px;
+}
+
+.gyn-hero-kicker {
+  margin: 0 0 0.55rem;
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(187, 55, 55, 0.35);
+  border-radius: 999px;
+  padding: 0.25rem 0.8rem;
+  font-weight: 600;
+  font-size: 0.82rem;
+}
+
+.gyn-hero h1 {
+  margin: 0;
+  font-size: clamp(1.7rem, 4.8vw, 2.7rem);
+  line-height: 1.2;
+  color: #04476e;
+}
+
+.gyn-hero h1 span {
+  color: #fff5b8;
+}
+
+.gyn-hero p {
+  margin: 0.7rem 0 0;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.gyn-hero-circles span {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.32);
+}
+
+.gyn-hero-circles span:nth-child(1) {
+  width: 130px;
+  height: 130px;
+  top: -30px;
+  right: -30px;
+}
+
+.gyn-hero-circles span:nth-child(2) {
+  width: 90px;
+  height: 90px;
+  top: 40px;
+  right: 85px;
+}
+
+.gyn-hero-circles span:nth-child(3) {
+  width: 170px;
+  height: 170px;
+  bottom: -70px;
+  right: 16px;
+}
+
+.gyn-city-selector {
+  margin: 1rem 1rem 0;
+  background: #fff;
+  border-radius: 14px;
+  border: 1px solid #e5dff9;
+  padding: 0.9rem;
+}
+
+.gyn-city-selector label {
+  display: block;
+  margin-bottom: 0.45rem;
+  font-weight: 600;
+  color: #6257a6;
+}
+
+.gyn-city-selector input {
+  width: 100%;
+  border: 1px solid #c9c2ee;
+  border-radius: 10px;
+  padding: 0.65rem 0.8rem;
+  outline: none;
+}
+
+.gyn-city-selector input:focus {
+  border-color: rgb(133, 118, 235);
+  box-shadow: 0 0 0 3px rgba(133, 118, 235, 0.18);
+}
+
+.gyn-search-form {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.gyn-search-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.55rem;
+}
+
+.gyn-search-row button {
+  border: none;
+  border-radius: 10px;
+  background: #5b4db7;
+  color: #fff;
+  font-weight: 700;
+  padding: 0.65rem 0.95rem;
+}
+
+.gyn-search-row button:disabled {
+  background: #b5afdf;
+  color: #2b2850;
+  cursor: not-allowed;
+}
+
+.gyn-error {
+  margin: 1rem 1rem 0;
+  background: #fff1f2;
+  color: #8b1e31;
+  border: 1px solid #ffd5dd;
+  border-radius: 12px;
+  padding: 0.7rem 0.85rem;
+}
+
+.gyn-card-grid {
+  margin: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.gyn-card {
+  background: linear-gradient(160deg, #fff 0%, #fbf8ff 100%);
+  border: 1px solid #e9e3fc;
+  border-radius: 16px;
+  padding: 1rem;
+  box-shadow: 0 8px 24px rgba(133, 118, 235, 0.12);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.gyn-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 36px rgba(133, 118, 235, 0.2);
+}
+
+.gyn-card-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.7rem;
+  align-items: flex-start;
+}
+
+.gyn-card h3 {
+  margin: 0;
+  font-size: 1.08rem;
+  color: #3f366f;
+}
+
+.gyn-rating {
+  background: #f8f3ff;
+  border: 1px solid #ddd2fb;
+  border-radius: 999px;
+  padding: 0.2rem 0.55rem;
+  color: #6e5bc5;
+  font-size: 0.82rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.gyn-hospital {
+  margin: 0.45rem 0 0.75rem;
+  color: #776da6;
+  font-weight: 600;
+}
+
+.gyn-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.38rem;
+  color: #4b4860;
+}
+
+.gyn-empty {
+  grid-column: 1 / -1;
+  border-radius: 14px;
+  background: #fff;
+  border: 1px dashed #dacff9;
+  padding: 1rem;
+  color: #5a4f96;
+}
+
+.gyn-empty h3 {
+  margin: 0;
+}
+
+.gyn-empty p {
+  margin: 0.45rem 0 0;
+}
+
+@media (max-width: 768px) {
+  .gyn-hero {
+    padding: 1.8rem 1rem 1.7rem;
+  }
+
+  .gyn-card-grid {
+    margin: 0.85rem;
+  }
+
+  .gyn-search-row {
+    grid-template-columns: 1fr;
+  }
+}
