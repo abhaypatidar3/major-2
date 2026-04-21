@@ -22,6 +22,7 @@ import Community from "./pages/Community";
 import SyncoraAI from "./pages/SyncoraAI";
 import Profile from "./pages/Profile";
 import FindGynaecologists from "./pages/FindGynaecologists";
+import RemedySuggestion from "./pages/RemedySuggestion";
 
 const AppLayout = () => {
   const location = useLocation();
@@ -74,6 +75,14 @@ const AppLayout = () => {
             element={
               <ProtectedRoute>
                 <SyncoraAI />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/remedy"
+            element={
+              <ProtectedRoute>
+                <RemedySuggestion />
               </ProtectedRoute>
             }
           />

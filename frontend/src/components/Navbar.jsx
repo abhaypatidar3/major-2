@@ -43,6 +43,12 @@ const Navbar = () => {
                 <Link className="nav-link" to="/find-gynaecologists">
                   Find Gynaecologists
                 </Link>
+
+                {/* ADD THIS LINE */}
+                <Link className="nav-link" to="/remedy">
+                  Remedy Suggestions
+                </Link>
+
                 <Link className="nav-link" to="/profile">
                   Profile
                 </Link>
