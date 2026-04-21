@@ -1,0 +1,292 @@
+/* ── page shell ─────────────────────────────────────── */
+.remedy-page {
+    min-height: 100vh;
+    background: #fff9fb;
+}
+
+.remedy-hero {
+    background: linear-gradient(135deg, #f8d6e3 0%, #fce4ec 100%);
+    padding: 3rem 1.5rem 2rem;
+    text-align: center;
+}
+
+.remedy-hero h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #880e4f;
+    margin-bottom: 0.5rem;
+}
+
+.remedy-hero p {
+    font-size: 1rem;
+    color: #ad1457;
+}
+
+.remedy-container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 4rem;
+}
+
+/* ── form sections ──────────────────────────────────── */
+.remedy-section {
+    margin-bottom: 2rem;
+}
+
+.remedy-section-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #880e4f;
+    margin-bottom: 0.75rem;
+}
+
+/* ── phase buttons ──────────────────────────────────── */
+.phase-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+}
+
+@media (min-width: 600px) {
+    .phase-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.phase-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.75rem 0.5rem;
+    border: 1.5px solid #f8bbd0;
+    border-radius: 12px;
+    background: #fff;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.phase-btn:hover {
+    border-color: #e91e8c;
+    background: #fce4ec;
+}
+
+.phase-btn.active {
+    border-color: #c2185b;
+    background: #fce4ec;
+}
+
+.phase-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #880e4f;
+}
+
+.phase-sub {
+    font-size: 0.75rem;
+    color: #ad1457;
+    margin-top: 2px;
+}
+
+/* ── chips ──────────────────────────────────────────── */
+.chip-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.chip {
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    border: 1.5px solid #f8bbd0;
+    background: #fff;
+    font-size: 0.85rem;
+    color: #880e4f;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.chip:hover {
+    border-color: #c2185b;
+    background: #fce4ec;
+}
+
+.chip.active {
+    background: #c2185b;
+    border-color: #c2185b;
+    color: #fff;
+}
+
+/* ── submit ─────────────────────────────────────────── */
+.remedy-submit-btn {
+    display: block;
+    width: 100%;
+    padding: 0.85rem;
+    background: #c2185b;
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 1.5rem;
+    transition: background 0.2s ease;
+}
+
+.remedy-submit-btn:hover:not(:disabled) {
+    background: #880e4f;
+}
+
+.remedy-submit-btn:disabled {
+    background: #f8bbd0;
+    cursor: not-allowed;
+}
+
+/* ── error ──────────────────────────────────────────── */
+.remedy-error {
+    background: #fdecea;
+    color: #b71c1c;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+}
+
+/* ── loading ────────────────────────────────────────── */
+.remedy-loading {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: #ad1457;
+}
+
+.remedy-loading p {
+    margin-top: 1rem;
+    font-size: 0.95rem;
+}
+
+/* ── results ────────────────────────────────────────── */
+.remedy-results-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+}
+
+.remedy-results-header h2 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #880e4f;
+}
+
+.remedy-reset-btn {
+    background: none;
+    border: none;
+    color: #c2185b;
+    font-size: 0.9rem;
+    cursor: pointer;
+    padding: 0;
+}
+
+.remedy-reset-btn:hover {
+    text-decoration: underline;
+}
+
+/* ── result cards ───────────────────────────────────── */
+.remedy-cards-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+@media (min-width: 600px) {
+    .remedy-cards-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.remedy-card {
+    background: #fff;
+    border-radius: 14px;
+    border: 1px solid #f8bbd0;
+    padding: 1.25rem;
+}
+
+.remedy-card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.6rem;
+}
+
+.remedy-card-icon {
+    font-size: 1.2rem;
+}
+
+.remedy-card-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #ad1457;
+}
+
+.remedy-card-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #880e4f;
+    margin-bottom: 0.4rem;
+}
+
+.remedy-card-desc {
+    font-size: 0.88rem;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 0.6rem;
+}
+
+.remedy-disclaimer {
+    background: #fff8e1;
+    color: #e65100;
+    border-radius: 8px;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.5;
+}
+
+.remedy-card-reason {
+    font-size: 0.8rem;
+    color: #888;
+    border-top: 1px solid #f8bbd0;
+    padding-top: 0.6rem;
+    line-height: 1.5;
+}
+
+.reason-label {
+    font-weight: 600;
+    color: #ad1457;
+}
+
+/* ── card accent colours ────────────────────────────── */
+.remedy-card--recipe {
+    border-top: 3px solid #f48fb1;
+}
+
+.remedy-card--ayurvedic {
+    border-top: 3px solid #a5d6a7;
+}
+
+.remedy-card--dietary {
+    border-top: 3px solid #80cbc4;
+}
+
+.remedy-card--yoga {
+    border-top: 3px solid #ce93d8;
+}
+
+.remedy-card--home_remedy {
+    border-top: 3px solid #ffcc80;
+}
+
+.remedy-card--medication {
+    border-top: 3px solid #ef9a9a;
+}

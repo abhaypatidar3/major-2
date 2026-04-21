@@ -9,6 +9,7 @@ import userRoute from "./router/userRoute.js";
 import symptomRoute from "./router/symptomRoute.js";
 import aiRoute from "./router/aiRoute.js";
 import gynaecologistRoute from "./router/gynaecologistRoute.js";
+import remedyRoutes from "./router/remedyRoutes.js";
 
 config({ path: "./config/config.env" });
 
@@ -38,6 +39,7 @@ app.use("/api/v1/user", userRoute);
 app.use("/api/v1/symptoms", symptomRoute);
 app.use("/api/v1/ai", aiRoute);
 app.use("/api/v1/gynaecologists", gynaecologistRoute);
+app.use("/api/v1/remedy", remedyRoutes);
 
 app.use(errorMiddleware);
 

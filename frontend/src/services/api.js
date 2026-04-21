@@ -19,3 +19,5 @@ export const chatWithSyncoraAI = (message, history) =>
 
 export const getJustdialGynaecologists = (city) =>
   API.get(`/gynaecologists/justdial?city=${encodeURIComponent(city)}`);
+
+export const getRemedySuggestions = (data) => API.post("/remedy/suggest", data);
