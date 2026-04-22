@@ -32,12 +32,12 @@ const Navbar = () => {
             <Link className="nav-link" to="/home">
               Home
             </Link>
-            <Link className="nav-link" to="/services">
+            {/* <Link className="nav-link" to="/services">
               Services
-            </Link>
-            <Link className="nav-link" to="/community">
+            </Link> */}
+            {/* <Link className="nav-link" to="/community">
               Community
-            </Link>
+            </Link> */}
             {isAuthenticated ? (
               <>
                 <Link className="nav-link" to="/find-gynaecologists">
@@ -47,6 +47,15 @@ const Navbar = () => {
                 {/* ADD THIS LINE */}
                 <Link className="nav-link" to="/remedy">
                   Remedy Suggestions
+                </Link>
+                <Link className="nav-link" to="/cycle-tracker">
+                  Cycle Tracker
+                </Link>
+                <Link className="nav-link" to="/risk-prediction">
+                  Risk Prediction
+                </Link>
+                <Link className="nav-link" to="/services">
+                  Services
                 </Link>
 
                 <Link className="nav-link" to="/profile">
