@@ -21,3 +21,10 @@ export const getJustdialGynaecologists = (city) =>
   API.get(`/gynaecologists/justdial?city=${encodeURIComponent(city)}`);
 
 export const getRemedySuggestions = (data) => API.post("/remedy/suggest", data);
+
+export const saveCycleLog = (data) => API.post("/cycle/log", data);
+export const getCycleLogs = () => API.get("/cycle/logs");
+export const deleteCycleLog = (id) => API.delete(`/cycle/log/${id}`);
+
+// Risk Prediction
+export const getRiskPrediction = () => API.get("/risk/predict");

@@ -23,6 +23,8 @@ import SyncoraAI from "./pages/SyncoraAI";
 import Profile from "./pages/Profile";
 import FindGynaecologists from "./pages/FindGynaecologists";
 import RemedySuggestion from "./pages/RemedySuggestion";
+import CycleTracker from "./pages/CycleTracker";
+import RiskPrediction from "./pages/RiskPrediction";
 
 const AppLayout = () => {
   const location = useLocation();
@@ -54,6 +56,22 @@ const AppLayout = () => {
           <Route path="/symptoms/:id" element={<SymptomDetail />} />
           <Route path="/education" element={<Education />} />
           <Route path="/community" element={<Community />} />
+          <Route
+            path="/cycle-tracker"
+            element={
+              <ProtectedRoute>
+                <CycleTracker />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/risk-prediction"
+            element={
+              <ProtectedRoute>
+                <RiskPrediction />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/find-gynaecologists"
             element={
