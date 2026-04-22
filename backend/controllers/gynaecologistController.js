@@ -4,229 +4,113 @@ import ErrorHandler from "../middlewares/error.js";
 
 const NEXT_DATA_START = '<script id="__NEXT_DATA__" type="application/json">';
 const NEXT_DATA_END = "</script>";
-const JUSTDIAL_CACHE_TTL_MS = Number(
-  process.env.JD_CACHE_TTL_MS || 15 * 60 * 1000,
-);
-const JUSTDIAL_CACHE_MAX_ENTRIES = Number(
-  process.env.JD_CACHE_MAX_ENTRIES || 100,
-);
 
-const justdialCityCache = new Map();
+// Updated URL with 2026 Category IDs
+const SEARCH_CATEGORY_ID = "nct-12102921"; // Women Gynaecologist & Obstetrician ID
 
-const GYNAE_INCLUDE_KEYWORDS = [
-  "gyna",
-  "gyne",
-  "obstetric",
-  "maternity",
-  "pregnan",
-  "fertility",
-  "ivf",
-  "women hospital",
-  "womens hospital",
-  "women clinic",
-  "womens clinic",
-  "lady doctor",
-];
+/**
+ * Robust JSON Extractor: 
+ * Justdial 2026 uses a deeply nested initialState object.
+ */
+const parseJustdialData = (html) => {
+  try {
+    const start = html.indexOf(NEXT_DATA_START);
+    const end = html.indexOf(NEXT_DATA_END, start);
+    if (start === -1 || end === -1) return [];
 
-const IRRELEVANT_KEYWORDS = [
-  "institute",
-  "institutes",
-  "academy",
-  "college",
-  "coaching",
-  "tuition",
-  "tutorial",
-  "training",
-  "education",
-  "school",
-  "classes",
-  "career",
-  "computer",
-  "english",
-  "spoken",
-];
+    const jsonText = html.slice(start + NEXT_DATA_START.length, end);
+    const parsed = JSON.parse(jsonText);
 
-const normalizeSpaces = (value = "") =>
-  String(value).replaceAll(/\s+/g, " ").trim();
+    // Try multiple possible paths as JD updates their Next.js structure monthly
+    const resultsObj = 
+      parsed?.props?.pageProps?.initialState?.listData?.results || 
+      parsed?.props?.pageProps?.listData?.results || 
+      parsed?.props?.pageProps?.results;
 
-const getYearsText = (attrData = {}) => {
-  const raw = attrData?.node3?.[0] || "";
-  const plainText = raw.replaceAll(/<[^>]+>/g, "");
-  return normalizeSpaces(plainText);
-};
+    if (!resultsObj || !resultsObj.data) return [];
 
-const extractNextDataJson = (html) => {
-  const start = html.indexOf(NEXT_DATA_START);
-  if (start === -1) return null;
-
-  const end = html.indexOf(NEXT_DATA_END, start);
-  if (end === -1) return null;
-
-  return html.slice(start + NEXT_DATA_START.length, end);
-};
-
-const mapJustdialListing = (row, columns) => {
-  const item = {};
-
-  columns.forEach((column, index) => {
-    item[column] = row[index];
-  });
-
-  const specialization = normalizeSpaces(item.type || "");
-  const experience = getYearsText(item.attr_data) || "Not specified";
-
-  return {
-    name: normalizeSpaces(item.name || ""),
-    hospital: normalizeSpaces(item.NewAddress || "Not specified"),
-    rating: item.compRating ? Number(item.compRating) : null,
-    experience,
-    area: normalizeSpaces(item.area || "Not specified"),
-    specialization: specialization || "General gynecology",
-    contact: normalizeSpaces(item.VNumber || "Not available"),
-  };
-};
-
-const hasAnyKeyword = (text, keywords) =>
-  keywords.some((keyword) => text.includes(keyword));
-
-const isGynaecologyResult = (doctor) => {
-  const text =
-    `${doctor.name} ${doctor.specialization} ${doctor.hospital}`.toLowerCase();
-  const hasGynaeSignal = hasAnyKeyword(text, GYNAE_INCLUDE_KEYWORDS);
-  const hasIrrelevantSignal = hasAnyKeyword(text, IRRELEVANT_KEYWORDS);
-  return hasGynaeSignal && !hasIrrelevantSignal;
-};
-
-const dedupeDoctors = (doctors) => {
-  const seen = new Set();
-  return doctors.filter((doctor) => {
-    const key = `${doctor.name.toLowerCase()}|${doctor.contact.toLowerCase()}`;
-    if (seen.has(key)) return false;
-    seen.add(key);
-    return true;
-  });
-};
-
-const getCacheKey = (city) => city.toLowerCase();
-
-const getCachedDoctors = (city) => {
-  const key = getCacheKey(city);
-  const cached = justdialCityCache.get(key);
-  if (!cached) return null;
-
-  const isExpired = Date.now() - cached.cachedAt > JUSTDIAL_CACHE_TTL_MS;
-  if (isExpired) {
-    justdialCityCache.delete(key);
-    return null;
-  }
-
-  return cached;
-};
-
-const setCachedDoctors = (city, doctors) => {
-  const key = getCacheKey(city);
-  justdialCityCache.set(key, {
-    doctors,
-    cachedAt: Date.now(),
-  });
-
-  if (justdialCityCache.size > JUSTDIAL_CACHE_MAX_ENTRIES) {
-    const oldestKey = justdialCityCache.keys().next().value;
-    if (oldestKey) {
-      justdialCityCache.delete(oldestKey);
-    }
-  }
-};
-
-const parseDoctorsFromJustdialHtml = (html) => {
-  const nextDataText = extractNextDataJson(html);
-  if (!nextDataText) return [];
-
-  const nextData = JSON.parse(nextDataText);
-  const columns = nextData?.props?.pageProps?.listData?.results?.columns || [];
-  const rows = nextData?.props?.pageProps?.listData?.results?.data || [];
-
-  if (!Array.isArray(columns) || !Array.isArray(rows)) {
+    const columns = resultsObj.columns || [];
+    return resultsObj.data.map((row) => {
+      const item = {};
+      columns.forEach((col, i) => { item[col] = row[i]; });
+      
+      return {
+        name: (item.name || "Unknown").trim(),
+        hospital: (item.compName || item.NewAddress || "Not specified").replace(/<[^>]+>/g, "").trim(),
+        rating: item.compRating ? parseFloat(item.compRating) : null,
+        experience: item.attr_data?.node3?.[0]?.replace(/<[^>]+>/g, "") || "Not specified",
+        area: (item.area || "Not specified").trim(),
+        contact: item.VNumber || item.contact || "Not available",
+      };
+    });
+  } catch (err) {
+    console.error("Parse Error:", err.message);
     return [];
   }
-
-  return rows
-    .map((row) => mapJustdialListing(row, columns))
-    .filter((doctor) => doctor.name);
 };
 
-export const getJustdialGynaecologists = catchAsyncErrors(
-  async (req, res, next) => {
-    const city = normalizeSpaces(req.query.city || "");
+export const getJustdialGynaecologists = catchAsyncErrors(async (req, res, next) => {
+  const city = req.query.city?.trim();
+  if (!city) return next(new ErrorHandler("City is required", 400));
 
-    if (!city) {
-      return next(new ErrorHandler("City is required", 400));
-    }
+  // 1. Browser-grade Headers
+  const baseHeaders = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+    "Accept-Language": "en-US,en;q=0.5",
+    "Connection": "keep-alive",
+    "Upgrade-Insecure-Requests": "1",
+    "Sec-Fetch-Dest": "document",
+    "Sec-Fetch-Mode": "navigate",
+    "Sec-Fetch-Site": "none",
+    "Sec-Fetch-User": "?1",
+  };
 
-    const cached = getCachedDoctors(city);
-    if (cached) {
-      return res.status(200).json({
-        success: true,
-        source: "justdial",
-        city,
-        doctors: cached.doctors,
-        cached: true,
-      });
-    }
+  try {
+    // 2. STEP ONE: Get Session Cookies from the Homepage
+    // Justdial blocks direct NCT deep-links if no session cookie exists.
+    const homeResponse = await axios.get("https://www.justdial.com/", { 
+      headers: baseHeaders, 
+      timeout: 8000 
+    });
+    
+    const cookies = homeResponse.headers["set-cookie"];
+    const cookieString = cookies ? cookies.map(c => c.split(';')[0]).join('; ') : "";
 
-    const encodedCity = encodeURIComponent(city);
-    const searchUrls = [
-      `https://www.justdial.com/${encodedCity}/Gynaecologist/nct-10269960`,
-      `https://www.justdial.com/${encodedCity}/Gynecologist`,
-      `https://www.justdial.com/${encodedCity}/Obstetricians-and-Gynaecologists`,
-    ];
-
-    const requestConfig = {
+    // 3. STEP TWO: Search for Doctors using the session
+    const searchUrl = `https://www.justdial.com/${encodeURIComponent(city)}/Women-Gynaecologist-Obstetrician-Doctors/${SEARCH_CATEGORY_ID}`;
+    
+    const response = await axios.get(searchUrl, {
       headers: {
-        "User-Agent":
-          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36",
-        Accept:
-          "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
-        "Accept-Language": "en-IN,en;q=0.9",
-        Referer: "https://www.justdial.com/",
+        ...baseHeaders,
+        "Cookie": cookieString,
+        "Referer": "https://www.justdial.com/",
       },
       timeout: 15000,
-    };
+    });
 
-    const collected = [];
+    const doctors = parseJustdialData(response.data);
 
-    for (const searchUrl of searchUrls) {
-      try {
-        const response = await axios.get(searchUrl, requestConfig);
-        const doctorsFromUrl = parseDoctorsFromJustdialHtml(response.data);
-        if (doctorsFromUrl.length) {
-          collected.push(...doctorsFromUrl);
-        }
-      } catch {
-        // Try the next URL pattern if one fails.
-      }
+    if (doctors.length === 0) {
+      // Logic for 2026: If structure fails, log a snippet for debugging
+      console.log("HTML Sample:", response.data.slice(0, 500));
+      return next(new ErrorHandler("Justdial structure changed or bot detected. Check console logs.", 502));
     }
 
-    if (!collected.length) {
-      return next(
-        new ErrorHandler("Unable to fetch Justdial data for this city", 502),
-      );
-    }
-
-    const doctors = dedupeDoctors(collected)
-      .filter(isGynaecologyResult)
-      .slice(0, 5);
-
-    if (doctors.length) {
-      setCachedDoctors(city, doctors);
-    }
+    // 4. Final filter and response
+    const finalDoctors = doctors.slice(0, 10);
 
     res.status(200).json({
       success: true,
       source: "justdial",
       city,
-      doctors,
-      cached: false,
+      count: finalDoctors.length,
+      doctors: finalDoctors,
     });
-  },
-);
+
+  } catch (error) {
+    const status = error.response?.status || 500;
+    const message = status === 403 ? "IP Blocked by Justdial. Use a VPN or Proxy." : error.message;
+    return next(new ErrorHandler(message, status));
+  }
+});

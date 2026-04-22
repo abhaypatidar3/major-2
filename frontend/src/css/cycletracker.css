@@ -3,32 +3,100 @@
     background: #fff9fb;
 }
 
+/* ── Hero — matches home-hero exactly ───────────────── */
 .ct-hero {
     position: relative;
-        overflow: hidden;
-        border-radius: 0 0 34px 34px;
-        padding: 2.4rem 1.25rem 2.1rem;
-        background: linear-gradient(135deg,
-                rgb(133, 118, 235) 0%,
-                rgba(164, 108, 230, 0.95) 47%,
-                rgba(225, 77, 156, 0.9) 100%);
-    
+    overflow: hidden;
+    border-radius: 0 0 36px 36px;
+    padding: 3rem 2.5rem 2rem;
+    margin: -1px 0 0;
+    background: linear-gradient(
+        135deg,
+        rgb(133, 118, 235) 0%,
+        rgba(160, 100, 220, 0.95) 45%,
+        rgba(225, 77, 156, 0.88) 100%
+    );
+    animation: ctHeroEnter 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
+/* radial light overlay */
+.ct-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse at 80% 20%, rgba(255,255,255,0.12) 0%, transparent 60%),
+        radial-gradient(ellipse at 10% 80%, rgba(255,255,255,0.08) 0%, transparent 55%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* floating decorative circle — top-right */
+.ct-hero::after {
+    content: "";
+    position: absolute;
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    top: -80px;
+    right: -60px;
+    pointer-events: none;
+    animation: ctCircleFloat 7s ease-in-out infinite;
+}
+
+@keyframes ctHeroEnter {
+    from { opacity: 0; transform: translateY(-20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes ctHeroText {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes ctCircleFloat {
+    0%, 100% { transform: translate(0, 0); }
+    50%       { transform: translate(-12px, -18px); }
+}
 
 .ct-hero h1 {
-    font-size: 1.9rem;
-    font-weight: 700;
-    color: #4527a0;
-    margin-bottom: 0.4rem;
-    
+    position: relative;
+    z-index: 1;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 600;
+    color: #04476e;
+    margin: 0 0 0.4rem;
+    line-height: 1.15;
+    animation: ctHeroText 0.6s 0.15s both;
 }
 
 .ct-hero p {
-    color: #4527a0;
-    font-size: 0.95rem;
+    position: relative;
+    z-index: 1;
+    font-size: 1.05rem;
+    color: rgba(255, 255, 255, 0.88);
+    line-height: 1.65;
+    margin: 0;
+    animation: ctHeroText 0.6s 0.25s both;
 }
 
+/* ── Responsive ─────────────────────────────────────── */
+@media (max-width: 768px) {
+    .ct-hero {
+        padding: 3rem 1.5rem 2rem;
+        border-radius: 0 0 26px 26px;
+    }
+}
+
+/* ── Future date cell ───────────────────────────────── */
+.ct-cell--future {
+    opacity: 0.35;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* ── Loading ────────────────────────────────────────── */
 .ct-loading {
     text-align: center;
     padding: 4rem 1rem;
@@ -39,6 +107,7 @@
     margin-top: 1rem;
 }
 
+/* ── Flash ──────────────────────────────────────────── */
 .ct-flash {
     text-align: center;
     padding: 0.6rem 1rem;
@@ -58,6 +127,7 @@
     color: #c62828;
 }
 
+/* ── Layout ─────────────────────────────────────────── */
 .ct-layout {
     display: grid;
     grid-template-columns: 1fr;
@@ -73,7 +143,7 @@
     }
 }
 
-/* calendar */
+/* ── Calendar ───────────────────────────────────────── */
 .ct-calendar-card {
     background: #fff;
     border: 1px solid #f8bbd0;
@@ -198,7 +268,7 @@
     border-radius: 50%;
 }
 
-/* form */
+/* ── Log Form ───────────────────────────────────────── */
 .ct-form-card {
     background: #fff;
     border: 1px solid #f8bbd0;
@@ -301,7 +371,7 @@
 .ct-save-btn {
     flex: 1;
     padding: 0.75rem;
-    background:rgb(133, 118, 235);
+    background: rgb(133, 118, 235);
     color: #fff;
     border: none;
     border-radius: 10px;
@@ -312,9 +382,11 @@
 }
 
 .ct-save-btn:hover:not(:disabled) {
-    background:linear-gradient(rgba(150, 132, 241, 0.9),
-            rgba(159, 148, 229, 0.5),
-            rgba(225, 77, 156, 0.7));
+    background: linear-gradient(
+        rgba(150, 132, 241, 0.9),
+        rgba(159, 148, 229, 0.5),
+        rgba(225, 77, 156, 0.7)
+    );
 }
 
 .ct-save-btn:disabled {

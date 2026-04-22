@@ -38,6 +38,12 @@ today.setHours(0, 0, 0, 0);
 
 const toDateKey = (date) => date.toISOString().split("T")[0];
 
+// Returns true if the given dateKey string (YYYY-MM-DD) is after today
+const isFutureDate = (dateKey) => {
+  const d = new Date(dateKey + "T00:00:00");
+  return d > today;
+};
+
 const CycleTracker = () => {
   const [logs, setLogs] = useState({});
   const [selectedDate, setSelectedDate] = useState(toDateKey(today));
@@ -54,11 +60,12 @@ const CycleTracker = () => {
   const [loading, setLoading] = useState(true);
   const [flash, setFlash] = useState(null);
 
-  // fetch logs on mount
+  // fetch logs on mount — pre-populates calendar from DB on every login
   useEffect(() => {
-    const fetch = async () => {
+    const fetchLogs = async () => {
       try {
         const { data } = await getCycleLogs();
+        // Backend returns { success, logs }
         const map = {};
         data.logs.forEach((l) => {
           map[toDateKey(new Date(l.date))] = l;
@@ -70,10 +77,10 @@ const CycleTracker = () => {
         setLoading(false);
       }
     };
-    fetch();
+    fetchLogs();
   }, []);
 
-  // when date changes, load existing log into form
+  // when selected date changes, load existing log into form (or reset)
   useEffect(() => {
     const existing = logs[selectedDate];
     if (existing) {
@@ -106,6 +113,7 @@ const CycleTracker = () => {
     setSaving(true);
     try {
       const { data } = await saveCycleLog({ date: selectedDate, ...form });
+      // Backend returns { success, log }
       setLogs((prev) => ({ ...prev, [selectedDate]: data.log }));
       showFlash("Log saved!");
     } catch {
@@ -153,16 +161,26 @@ const CycleTracker = () => {
       const log = logs[dateKey];
       const isSelected = selectedDate === dateKey;
       const isToday = dateKey === toDateKey(today);
+      const isFuture = isFutureDate(dateKey);
       const flow = log?.flow || "none";
 
       cells.push(
         <div
           key={dateKey}
-          className={`ct-cell ${isSelected ? "ct-cell--selected" : ""} ${isToday ? "ct-cell--today" : ""}`}
-          onClick={() => setSelectedDate(dateKey)}
+          className={[
+            "ct-cell",
+            isSelected ? "ct-cell--selected" : "",
+            isToday ? "ct-cell--today" : "",
+            isFuture ? "ct-cell--future" : "",
+          ]
+            .filter(Boolean)
+            .join(" ")}
+          // Disable click for future dates
+          onClick={() => !isFuture && setSelectedDate(dateKey)}
+          title={isFuture ? "Future dates cannot be logged" : undefined}
         >
           <span className="ct-day-num">{d}</span>
-          {flow !== "none" && (
+          {flow !== "none" && !isFuture && (
             <span
               className="ct-flow-dot"
               style={{
@@ -170,7 +188,9 @@ const CycleTracker = () => {
               }}
             />
           )}
-          {log?.symptoms?.length > 0 && <span className="ct-has-symptoms" />}
+          {log?.symptoms?.length > 0 && !isFuture && (
+            <span className="ct-has-symptoms" />
+          )}
         </div>,
       );
     }
@@ -181,6 +201,11 @@ const CycleTracker = () => {
     month: "long",
     year: "numeric",
   });
+
+  // Prevent navigating to future months beyond the current month
+  const isCurrentMonth =
+    currentMonth.getFullYear() === today.getFullYear() &&
+    currentMonth.getMonth() === today.getMonth();
 
   if (loading) {
     return (
@@ -220,16 +245,21 @@ const CycleTracker = () => {
               ‹
             </button>
             <span>{monthName}</span>
+            {/* Disable the › button when already on the current month */}
             <button
-              onClick={() =>
-                setCurrentMonth(
-                  new Date(
-                    currentMonth.getFullYear(),
-                    currentMonth.getMonth() + 1,
-                    1,
-                  ),
-                )
-              }
+              onClick={() => {
+                if (!isCurrentMonth) {
+                  setCurrentMonth(
+                    new Date(
+                      currentMonth.getFullYear(),
+                      currentMonth.getMonth() + 1,
+                      1,
+                    ),
+                  );
+                }
+              }}
+              disabled={isCurrentMonth}
+              style={isCurrentMonth ? { opacity: 0.3, cursor: "not-allowed" } : {}}
             >
               ›
             </button>

@@ -1,39 +1,94 @@
-
 .remedy-page {
     min-height: 100vh;
     background: #fff9fb;
 }
 
+/* ── Hero — matches home-hero exactly ───────────────── */
 .remedy-hero {
     position: relative;
-        overflow: hidden;
-        border-radius: 0 0 34px 34px;
-        padding: 2.4rem 1.25rem 2.1rem;
-        background: linear-gradient(135deg,
-                rgb(133, 118, 235) 0%,
-                rgba(164, 108, 230, 0.95) 47%,
-                rgba(225, 77, 156, 0.9) 100%);
+    overflow: hidden;
+    border-radius: 0 0 36px 36px;
+    padding: 3rem 2.5rem 2rem;
+    margin: -1px 0 0;
+    background: linear-gradient(
+        135deg,
+        rgb(133, 118, 235) 0%,
+        rgba(160, 100, 220, 0.95) 45%,
+        rgba(225, 77, 156, 0.88) 100%
+    );
+    animation: remedyHeroEnter 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* radial light overlay */
+.remedy-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse at 80% 20%, rgba(255,255,255,0.12) 0%, transparent 60%),
+        radial-gradient(ellipse at 10% 80%, rgba(255,255,255,0.08) 0%, transparent 55%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* floating decorative circle — top-right */
+.remedy-hero::after {
+    content: "";
+    position: absolute;
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    top: -80px;
+    right: -60px;
+    pointer-events: none;
+    animation: remedyCircleFloat 7s ease-in-out infinite;
+}
+
+@keyframes remedyHeroEnter {
+    from { opacity: 0; transform: translateY(-20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes remedyHeroText {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes remedyCircleFloat {
+    0%, 100% { transform: translate(0, 0); }
+    50%       { transform: translate(-12px, -18px); }
 }
 
 .remedy-hero h1 {
-    font-size: 2rem;
-    font-weight: 700;
-    color:#4527a0;
-    margin-bottom: 0.5rem;
+    position: relative;
+    z-index: 1;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 600;
+    color: #04476e;
+    margin: 0 0 0.5rem;
+    line-height: 1.15;
+    animation: remedyHeroText 0.6s 0.15s both;
 }
 
 .remedy-hero p {
-    font-size: 1rem;
-    color:#4527a0;
+    position: relative;
+    z-index: 1;
+    font-size: 1.05rem;
+    color: rgba(255, 255, 255, 0.88);
+    line-height: 1.65;
+    margin: 0;
+    animation: remedyHeroText 0.6s 0.25s both;
 }
 
+/* ── Container ──────────────────────────────────────── */
 .remedy-container {
     max-width: 860px;
     margin: 0 auto;
     padding: 2rem 1.25rem 4rem;
 }
 
-*/ ── form sections ──────────────────────────────────── */
+/* ── form sections ──────────────────────────────────── */
 .remedy-section {
     margin-bottom: 2rem;
 }
@@ -126,7 +181,7 @@
     display: block;
     width: 100%;
     padding: 0.85rem;
-    background:rgb(133, 118, 235);
+    background: rgb(133, 118, 235);
     color: #fff;
     border: none;
     border-radius: 12px;
@@ -181,7 +236,7 @@
 .remedy-results-header h2 {
     font-size: 1.3rem;
     font-weight: 700;
-    color: rgb(133, 118, 235);;
+    color: rgb(133, 118, 235);
 }
 
 .remedy-reset-btn {
@@ -274,34 +329,12 @@
 }
 
 /* ── card accent colours ────────────────────────────── */
-.remedy-card--recipe {
-    border-top: 3px solid #f48fb1;
-}
-
-.remedy-card--ayurvedic {
-    border-top: 3px solid #a5d6a7;
-}
-
-.remedy-card--dietary {
-    border-top: 3px solid #80cbc4;
-}
-
-.remedy-card--yoga {
-    border-top: 3px solid #ce93d8;
-}
-
-.remedy-card--home_remedy {
-    border-top: 3px solid #ffcc80;
-}
-
-.remedy-card--medication {
-    border-top: 3px solid #ef9a9a;
-} */
-
-
-
-
-
+.remedy-card--recipe      { border-top: 3px solid #f48fb1; }
+.remedy-card--ayurvedic   { border-top: 3px solid #a5d6a7; }
+.remedy-card--dietary     { border-top: 3px solid #80cbc4; }
+.remedy-card--yoga        { border-top: 3px solid #ce93d8; }
+.remedy-card--home_remedy { border-top: 3px solid #ffcc80; }
+.remedy-card--medication  { border-top: 3px solid #ef9a9a; }
 
 /* ── section icons ──────────────────────────────────── */
 .section-icon {
@@ -322,52 +355,24 @@
 }
 
 /* ── mood chips — purple tint ───────────────────────── */
-.chip--mood {
-    border-color: #ce93d8;
-    color: #6a1b9a;
-}
-
-.chip--mood:hover {
-    background: #f3e5f5;
-    border-color: #8e24aa;
-}
-
-.chip--mood.active {
-    background: #8e24aa;
-    border-color: #8e24aa;
-    color: #fff;
-}
+.chip--mood { border-color: #ce93d8; color: #6a1b9a; }
+.chip--mood:hover { background: #f3e5f5; border-color: #8e24aa; }
+.chip--mood.active { background: #8e24aa; border-color: #8e24aa; color: #fff; }
 
 /* ── craving chips — amber tint ─────────────────────── */
-.chip--craving {
-    border-color: #ffe082;
-    color: #e65100;
-}
-
-.chip--craving:hover {
-    background: #fff8e1;
-    border-color: #f9a825;
-}
-
-.chip--craving.active {
-    background: #f9a825;
-    border-color: #f9a825;
-    color: #fff;
-}
+.chip--craving { border-color: #ffe082; color: #e65100; }
+.chip--craving:hover { background: #fff8e1; border-color: #f9a825; }
+.chip--craving.active { background: #f9a825; border-color: #f9a825; color: #fff; }
 
 /* ── symptom chips — teal tint ──────────────────────── */
-.chip--symptom {
-    border-color: #80cbc4;
-    color: #00695c;
-}
+.chip--symptom { border-color: #80cbc4; color: #00695c; }
+.chip--symptom:hover { background: #e0f2f1; border-color: #00897b; }
+.chip--symptom.active { background: #00897b; border-color: #00897b; color: #fff; }
 
-.chip--symptom:hover {
-    background: #e0f2f1;
-    border-color: #00897b;
-}
-
-.chip--symptom.active {
-    background: #00897b;
-    border-color: #00897b;
-    color: #fff;
+/* ── Responsive ─────────────────────────────────────── */
+@media (max-width: 768px) {
+    .remedy-hero {
+        padding: 3rem 1.5rem 2rem;
+        border-radius: 0 0 26px 26px;
+    }
 }

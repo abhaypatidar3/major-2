@@ -9,11 +9,17 @@ const RISK_PROMPT = `You are a menstrual health risk analyst AI embedded in a wo
 You will receive a user's profile and their last 3 months of cycle log data.
 Your job is to analyze patterns and flag potential health risks — gently and responsibly.
 
+IMPORTANT CONTEXT ON DATA:
+- Users only log days when they have flow, symptoms, or mood changes — they do NOT log every single day of the month.
+- 5–15 logged days over 3 months is completely normal and represents multiple full cycles worth of data.
+- Judge data quality based on the number of distinct periods covered and the richness of symptom/mood data — NOT on raw day count.
+- Only mark data_quality as "insufficient" if there are 0 logged days. Mark "limited" only if fewer than 3 days are logged.
+- The user's profile fields (avg cycle length, period duration, last period date, known conditions) are rich data — use them heavily in your analysis even when log count is low.
+
 Rules:
 - NEVER diagnose. Say "may indicate" or "could be associated with" — never "you have".
 - Be warm, not alarming. Frame risks as things to watch, not certainties.
 - Always recommend consulting a gynaecologist for anything flagged moderate or high.
-- If data is too limited (less than 2 weeks of logs), say so clearly.
 
 Respond ONLY with a valid JSON object, no markdown, no extra text:
 {
@@ -68,6 +74,22 @@ export const getRiskPrediction = catchAsyncErrors(async (req, res, next) => {
   // Count flow days
   const flowDays = logs.filter((l) => l.flow && l.flow !== "none");
   const heavyFlowDays = flowDays.filter((l) => l.flow === "heavy").length;
+  const mediumFlowDays = flowDays.filter((l) => l.flow === "medium").length;
+  const lightFlowDays = flowDays.filter((l) => l.flow === "light").length;
+
+  // Estimate distinct periods: group flow days that are within 2 days of each other
+  let distinctPeriods = 0;
+  let lastFlowDate = null;
+  flowDays.forEach((l) => {
+    const d = new Date(l.date);
+    if (
+      !lastFlowDate ||
+      (d - lastFlowDate) / (1000 * 60 * 60 * 24) > 2
+    ) {
+      distinctPeriods++;
+    }
+    lastFlowDate = d;
+  });
 
   // Collect all symptoms and count frequency
   const symptomCount = {};
@@ -105,9 +127,10 @@ USER PROFILE:
 - Currently on medication: ${user.currentMedications ? "yes" : "no"}
 
 CYCLE LOG SUMMARY (last 3 months):
-- Total days logged: ${totalDaysLogged}
-- Total flow days: ${flowDays.length}
-- Heavy flow days: ${heavyFlowDays}
+- Note: Users only log days with flow/symptoms — not every calendar day. Low day counts are normal.
+- Total days logged: ${totalDaysLogged} (these are active symptom/flow days, not total days in the period)
+- Estimated distinct periods captured: ${distinctPeriods}
+- Total flow days: ${flowDays.length} (light: ${lightFlowDays}, medium: ${mediumFlowDays}, heavy: ${heavyFlowDays})
 - Most frequent symptoms: ${topSymptoms.length ? topSymptoms.join(", ") : "none logged"}
 - Most frequent moods: ${topMoods.length ? topMoods.join(", ") : "none logged"}
   `.trim();
@@ -120,7 +143,7 @@ CYCLE LOG SUMMARY (last 3 months):
         { role: "system", content: RISK_PROMPT },
         { role: "user", content: userMessage },
       ],
-      temperature: 0.3, // very low — we want careful, consistent output
+      temperature: 0.3,
       max_completion_tokens: 1200,
     });
 

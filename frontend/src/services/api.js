@@ -17,8 +17,13 @@ export const getSymptomById = (id) => API.get(`/symptoms/${id}`);
 export const chatWithSyncoraAI = (message, history) =>
   API.post("/ai/chat", { message, history });
 
-export const getJustdialGynaecologists = (city) =>
-  API.get(`/gynaecologists/justdial?city=${encodeURIComponent(city)}`);
+export const getDoctorsByCity = (city, params = {}) =>
+  API.get("/doctors", {
+    params: {
+      city,
+      ...params,
+    },
+  });
 
 export const getRemedySuggestions = (data) => API.post("/remedy/suggest", data);
 
