@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useAuth } from "../context/AuthContext";
-import { getJustdialGynaecologists } from "../services/api";
+import { getDoctorsByCity } from "../services/api";
 import "../css/findGynaecologists.css";
 
 const normalizeCity = (value) => value.trim().toLowerCase();
@@ -79,7 +79,9 @@ const FindGynaecologists = () => {
     setError("");
 
     try {
-      const { data } = await getJustdialGynaecologists(cleanCity);
+      const { data } = await getDoctorsByCity(cleanCity, {
+        limit: 5,
+      });
       const safeDoctors = (data?.doctors || [])
         .filter(isRelevantGynaeDoctor)
         .slice(0, 5);
@@ -90,7 +92,7 @@ const FindGynaecologists = () => {
       setCityLabel(cleanCity);
       setError(
         err?.response?.data?.message ||
-          "Unable to fetch Justdial results right now. Please try again.",
+          "Unable to fetch doctors right now. Please try again.",
       );
     } finally {
       setLoading(false);
@@ -164,7 +166,7 @@ const FindGynaecologists = () => {
 
       <section className="gyn-card-grid">
         {loading && (
-          <div className="gyn-empty">Fetching live Justdial listings...</div>
+          <div className="gyn-empty">Fetching doctors near you...</div>
         )}
         {doctors.length > 0 ? (
           doctors.map((doctor) => (

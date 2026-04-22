@@ -20,6 +20,9 @@
     "groq-sdk": "^1.1.2",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.8.4",
-    "nodemon": "^3.1.7"
+    "nodemon": "^3.1.7",
+    "puppeteer": "^24.42.0",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2"
   }
 }

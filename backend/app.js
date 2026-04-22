@@ -8,10 +8,10 @@ import { errorMiddleware } from "./middlewares/error.js";
 import userRoute from "./router/userRoute.js";
 import symptomRoute from "./router/symptomRoute.js";
 import aiRoute from "./router/aiRoute.js";
-import gynaecologistRoute from "./router/gynaecologistRoute.js";
 import remedyRoutes from "./router/remedyRoutes.js";
 import cycleRoute from "./router/cycleRoute.js";
 import riskRoute from "./router/riskRoute.js";
+import doctorRoutes from "./router/doctorRoutes.js";
 
 config({ path: "./config/config.env" });
 
@@ -35,12 +35,13 @@ app.use(
   }),
 );
 
+app.use("/api/v1/doctors", doctorRoutes);
+
 connection();
 
 app.use("/api/v1/user", userRoute);
 app.use("/api/v1/symptoms", symptomRoute);
 app.use("/api/v1/ai", aiRoute);
-app.use("/api/v1/gynaecologists", gynaecologistRoute);
 app.use("/api/v1/remedy", remedyRoutes);
 app.use("/api/v1/cycle", cycleRoute);
 app.use("/api/v1/risk", riskRoute);
