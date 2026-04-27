@@ -17,10 +17,12 @@ const Login = () => {
     setLoading(true);
     try {
       const data = await login({ username, password });
-      toast.success(data.message || "Welcome back to Syncora!");
+      toast.success(data.message || "Welcome back to NariCare!");
       navigate("/home");
     } catch (err) {
-      toast.error(err.response?.data?.message || "Login failed. Please try again.");
+      toast.error(
+        err.response?.data?.message || "Login failed. Please try again.",
+      );
     } finally {
       setLoading(false);
     }
@@ -35,21 +37,23 @@ const Login = () => {
 
       <div className="auth-card-wrapper">
         <div className="auth-card animate-slide-up">
-
           {/* Logo / Brand */}
           <div className="auth-brand">
             <div className="auth-logo-ring">
               <i className="fa-solid fa-heart-pulse" />
             </div>
-            <h2 className="auth-brand-name">Syncora</h2>
-            <p className="auth-brand-tagline">Your menstrual health companion</p>
+            <h2 className="auth-brand-name">NariCare</h2>
+            <p className="auth-brand-tagline">
+              Your menstrual health companion
+            </p>
           </div>
 
           <h1 className="auth-title">Welcome Back</h1>
-          <p className="auth-subtitle">Sign in to continue your wellness journey</p>
+          <p className="auth-subtitle">
+            Sign in to continue your wellness journey
+          </p>
 
           <form onSubmit={handleSubmit} className="auth-form">
-
             {/* Username */}
             <div className="auth-field">
               <label htmlFor="username">
@@ -91,7 +95,9 @@ const Login = () => {
                   onClick={() => setShowPassword(!showPassword)}
                   tabIndex={-1}
                 >
-                  <i className={`fa-solid fa-eye${showPassword ? "-slash" : ""}`} />
+                  <i
+                    className={`fa-solid fa-eye${showPassword ? "-slash" : ""}`}
+                  />
                 </button>
               </div>
             </div>
@@ -121,7 +127,6 @@ const Login = () => {
             <i className="fa-solid fa-user-plus me-2" />
             Create Account
           </Link>
-
         </div>
 
         {/* Decorative side panel */}
@@ -130,10 +135,22 @@ const Login = () => {
             <i className="fa-solid fa-venus auth-panel-icon" />
             <h3>Take Control of Your Health</h3>
             <ul className="auth-panel-list">
-              <li><i className="fa-solid fa-check-circle" /> Track your cycle accurately</li>
-              <li><i className="fa-solid fa-check-circle" /> Get symptom-based solutions</li>
-              <li><i className="fa-solid fa-check-circle" /> Access health education</li>
-              <li><i className="fa-solid fa-check-circle" /> Connect with community</li>
+              <li>
+                <i className="fa-solid fa-check-circle" /> Track your cycle
+                accurately
+              </li>
+              <li>
+                <i className="fa-solid fa-check-circle" /> Get symptom-based
+                solutions
+              </li>
+              <li>
+                <i className="fa-solid fa-check-circle" /> Access health
+                education
+              </li>
+              <li>
+                <i className="fa-solid fa-check-circle" /> Connect with
+                community
+              </li>
             </ul>
           </div>
         </div>

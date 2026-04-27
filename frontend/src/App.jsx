@@ -19,9 +19,9 @@ import Symptoms from "./pages/Symptoms";
 import SymptomDetail from "./pages/SymptomDetail";
 import Education from "./pages/Education";
 import Community from "./pages/Community";
-import SyncoraAI from "./pages/SyncoraAI";
+import NariCareAI from "./pages/NariCareAI";
 import Profile from "./pages/Profile";
-import FindGynaecologists from "./pages/FindGynaecologists";
+import FindGynecologists from "./pages/FindGynecologists";
 import RemedySuggestion from "./pages/RemedySuggestion";
 import CycleTracker from "./pages/CycleTracker";
 import RiskPrediction from "./pages/RiskPrediction";
@@ -73,10 +73,10 @@ const AppLayout = () => {
             }
           />
           <Route
-            path="/find-gynaecologists"
+            path="/find-Gynecologists"
             element={
               <ProtectedRoute>
-                <FindGynaecologists />
+                <FindGynecologists />
               </ProtectedRoute>
             }
           />
@@ -89,10 +89,10 @@ const AppLayout = () => {
             }
           />
           <Route
-            path="/syncora-ai"
+            path="/NariCare-ai"
             element={
               <ProtectedRoute>
-                <SyncoraAI />
+                <NariCareAI />
               </ProtectedRoute>
             }
           />

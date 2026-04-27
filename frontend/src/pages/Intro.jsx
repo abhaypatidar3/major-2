@@ -57,7 +57,7 @@ const Intro = () => {
           }
         });
       },
-      { threshold: 0.12 }
+      { threshold: 0.12 },
     );
 
     document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
@@ -75,7 +75,7 @@ const Intro = () => {
       <header>
         <nav className="nav-container">
           <div className="logo-box">
-            <img src="/images/syncoracutout.png" alt="Syncora" />
+            <img src="/images/NariCare2.png" alt="NariCare" />
           </div>
           <div className="nav-buttons">
             <Link to="/login">
@@ -125,7 +125,7 @@ const Intro = () => {
             <div className="img-glow-wrap">
               <img
                 className="girl-image"
-                alt="Syncora platform illustration"
+                alt="NariCare platform illustration"
                 src="/images/introimage.jpeg"
               />
             </div>
@@ -137,7 +137,7 @@ const Intro = () => {
       <section className="page-2">
         <span className="section-label reveal">WHAT WE OFFER</span>
         <h1 className="section-title reveal">
-          Features of <span className="gradient-text">Syncora</span>
+          Features of <span className="gradient-text">NariCare</span>
         </h1>
         <p className="section-subtitle reveal">
           Everything you need for a healthier, more informed cycle journey
@@ -192,17 +192,16 @@ const Intro = () => {
         </div>
       </section>
 
-      {/* ── WHY SYNCORA ───────────────────────── */}
+      {/* ── WHY NariCare ───────────────────────── */}
       <section>
         <div className="page-3">
-          <div className="why-syncora reveal">
+          <div className="why-NariCare reveal">
             <span className="section-label">WHY US</span>
             <h1>
-              Why Choose{" "}
-              <span className="gradient-text">Syncora?</span>
+              Why Choose <span className="gradient-text">NariCare?</span>
             </h1>
             <p>
-              Syncora isn&apos;t just a platform — it&apos;s a companion for
+              NariCare isn&apos;t just a platform — it&apos;s a companion for
               your menstrual health journey. Designed with care and backed by
               science, we provide tools like a mood tracker, personalised
               symptom relief, and expert insights to make your cycle management
@@ -211,14 +210,14 @@ const Intro = () => {
               empowered every day.
             </p>
             <Link to="/register" className="why-cta">
-              Join Syncora <FaArrowRight />
+              Join NariCare <FaArrowRight />
             </Link>
           </div>
           <div className="reveal img-block">
             <img
               className="page-3-img"
-              src="/images/whysyncora.jpg"
-              alt="Why Syncora"
+              src="/images/whyNariCare.jpg"
+              alt="Why NariCare"
             />
           </div>
         </div>
@@ -233,14 +232,14 @@ const Intro = () => {
             alt="Our Mission"
           />
         </div>
-        <div className="why-syncora reveal">
+        <div className="why-NariCare reveal">
           <span className="section-label">OUR PURPOSE</span>
           <h1>
             Our <span className="gradient-text">Mission</span>
           </h1>
           <p>
             We believe that empowering women with the right tools and insights
-            can transform how they manage their health. Syncora is built to
+            can transform how they manage their health. NariCare is built to
             provide a holistic approach, combining data-driven insights,
             community engagement, and natural remedies for a happier, healthier
             you.
@@ -256,8 +255,8 @@ const Intro = () => {
         <div className="footer">
           <div className="footer-brand">
             <img
-              src="/images/syncoracutout.png"
-              alt="Syncora"
+              src="/images/NariCare2.png"
+              alt="NariCare"
               className="footer-logo"
             />
             <p>Your health companion, always.</p>
@@ -275,7 +274,7 @@ const Intro = () => {
               </a>
             </div>
             <div className="f-tag">
-              &copy; {new Date().getFullYear()} Syncora Private Limited
+              &copy; {new Date().getFullYear()} NariCare Private Limited
             </div>
           </div>
           <div className="f-info-links">

@@ -26,7 +26,7 @@ const doctorSchema = new mongoose.Schema({
   },
   specialization: {
     type: String,
-    default: "Gynaecologist & Obstetrician",
+    default: "Gynecologist & Obstetrician",
   },
   contact: {
     type: String,

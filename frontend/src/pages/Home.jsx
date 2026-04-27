@@ -43,7 +43,6 @@ const features = [
   },
 ];
 
-
 const Home = () => {
   const { user } = useAuth();
   const [showPopup, setShowPopup] = useState(false);
@@ -67,9 +66,12 @@ const Home = () => {
   // Staggered card entrance
   useEffect(() => {
     features.forEach((_, i) => {
-      setTimeout(() => {
-        setVisibleCards((prev) => [...prev, i]);
-      }, 200 + i * 150);
+      setTimeout(
+        () => {
+          setVisibleCards((prev) => [...prev, i]);
+        },
+        200 + i * 150,
+      );
     });
   }, []);
 
@@ -77,7 +79,6 @@ const Home = () => {
 
   return (
     <div className="home-page">
-
       {/* ── Hero Banner ── */}
       <div className="home-hero">
         <div className="home-hero-bg" />
@@ -90,7 +91,8 @@ const Home = () => {
             Hello, <span className="home-hero-name">{firstName}</span> 👋
           </h1>
           <p className="home-hero-subtitle">
-            Your companion in menstrual health &amp; wellness.<br />
+            Your companion in menstrual health &amp; wellness.
+            <br />
             What would you like to explore today?
           </p>
           <div className="home-hero-quote">
@@ -101,13 +103,13 @@ const Home = () => {
         </div>
 
         {/* AI Nurse CTA */}
-        <Link to="/syncora-ai" className="hero-ai-cta">
+        <Link to="/NariCare-ai" className="hero-ai-cta">
           <div className="hero-ai-icon">
             <FaRobot />
           </div>
           <div className="hero-ai-text">
             <span className="hero-ai-label">Talk to</span>
-            <span className="hero-ai-name">SyncoraAI</span>
+            <span className="hero-ai-name">NariCareAI</span>
           </div>
           <FaArrowRight className="hero-ai-arrow" />
         </Link>
@@ -121,7 +123,9 @@ const Home = () => {
       {/* ── Section heading ── */}
       <div className="home-section-heading">
         <h2>Explore Features</h2>
-        <p>Everything you need to understand and manage your health in one place</p>
+        <p>
+          Everything you need to understand and manage your health in one place
+        </p>
       </div>
 
       {/* ── Feature Cards ── */}
@@ -164,11 +168,15 @@ const Home = () => {
           <i className="fa-solid fa-heart-pulse motivation-icon" />
           <div>
             <h3>Your Health Matters</h3>
-            <p>Every cycle is a step toward understanding your body better. You&apos;re doing great!</p>
+            <p>
+              Every cycle is a step toward understanding your body better.
+              You&apos;re doing great!
+            </p>
           </div>
         </div>
         <Link to="/education" className="motivation-cta">
-          Learn More &nbsp;<i className="fa-solid fa-arrow-right" />
+          Learn More &nbsp;
+          <i className="fa-solid fa-arrow-right" />
         </Link>
       </div>
 
@@ -178,8 +186,14 @@ const Home = () => {
           <div className="hydration-popup" onClick={(e) => e.stopPropagation()}>
             <div className="hydration-icon">💧</div>
             <h4>Stay Hydrated!</h4>
-            <p>Drinking water regularly helps reduce period cramps and bloating. Have a glass now!</p>
-            <button onClick={() => setShowPopup(false)} className="hydration-btn">
+            <p>
+              Drinking water regularly helps reduce period cramps and bloating.
+              Have a glass now!
+            </p>
+            <button
+              onClick={() => setShowPopup(false)}
+              className="hydration-btn"
+            >
               Got it, thanks!
             </button>
           </div>

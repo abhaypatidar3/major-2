@@ -39,10 +39,12 @@ const Register = () => {
     setLoading(true);
     try {
       const data = await register(formData);
-      toast.success(data.message || "Welcome to Syncora!");
+      toast.success(data.message || "Welcome to NariCare!");
       navigate("/home");
     } catch (err) {
-      toast.error(err.response?.data?.message || "Registration failed. Please try again.");
+      toast.error(
+        err.response?.data?.message || "Registration failed. Please try again.",
+      );
     } finally {
       setLoading(false);
     }
@@ -56,17 +58,22 @@ const Register = () => {
       <div className="blob blob-3" />
 
       <div className="auth-card-wrapper register-wrapper">
-
         {/* Decorative side panel */}
         <div className="auth-panel auth-panel-left animate-slide-right">
           <div className="auth-panel-content">
             <i className="fa-solid fa-seedling auth-panel-icon" />
             <h3>Start Your Journey</h3>
-            <p>Join thousands of women empowering their health with Syncora.</p>
+            <p>
+              Join thousands of women empowering their health with NariCare.
+            </p>
             <div className="auth-steps-indicator">
-              <div className={`auth-step-dot ${step >= 1 ? "active" : ""}`}>1</div>
+              <div className={`auth-step-dot ${step >= 1 ? "active" : ""}`}>
+                1
+              </div>
               <div className={`auth-step-line ${step >= 2 ? "active" : ""}`} />
-              <div className={`auth-step-dot ${step >= 2 ? "active" : ""}`}>2</div>
+              <div className={`auth-step-dot ${step >= 2 ? "active" : ""}`}>
+                2
+              </div>
             </div>
             <p className="auth-step-label">
               {step === 1 ? "Personal Information" : "Account Details"}
@@ -75,13 +82,12 @@ const Register = () => {
         </div>
 
         <div className="auth-card animate-slide-up">
-
           {/* Logo / Brand */}
           <div className="auth-brand">
             <div className="auth-logo-ring">
               <i className="fa-solid fa-heart-pulse" />
             </div>
-            <h2 className="auth-brand-name">Syncora</h2>
+            <h2 className="auth-brand-name">NariCare</h2>
             <p className="auth-brand-tagline">Create your account</p>
           </div>
 
@@ -89,13 +95,14 @@ const Register = () => {
             {step === 1 ? "Tell Us About You" : "Secure Your Account"}
           </h1>
           <p className="auth-subtitle">
-            {step === 1 ? "Step 1 of 2 — Personal details" : "Step 2 of 2 — Account credentials"}
+            {step === 1
+              ? "Step 1 of 2 — Personal details"
+              : "Step 2 of 2 — Account credentials"}
           </p>
 
           {/* Step 1 */}
           {step === 1 && (
             <form onSubmit={handleNext} className="auth-form animate-fade-in">
-
               <div className="auth-field">
                 <label htmlFor="username">
                   <i className="fa-solid fa-at" /> Username
@@ -157,7 +164,6 @@ const Register = () => {
           {/* Step 2 */}
           {step === 2 && (
             <form onSubmit={handleSubmit} className="auth-form animate-fade-in">
-
               <div className="auth-field">
                 <label htmlFor="emailaddress">
                   <i className="fa-solid fa-envelope" /> Email Address
@@ -195,7 +201,9 @@ const Register = () => {
                     onClick={() => setShowPassword(!showPassword)}
                     tabIndex={-1}
                   >
-                    <i className={`fa-solid fa-eye${showPassword ? "-slash" : ""}`} />
+                    <i
+                      className={`fa-solid fa-eye${showPassword ? "-slash" : ""}`}
+                    />
                   </button>
                 </div>
               </div>
@@ -271,7 +279,6 @@ const Register = () => {
             <i className="fa-solid fa-right-to-bracket me-2" />
             Sign In Instead
           </Link>
-
         </div>
       </div>
     </div>

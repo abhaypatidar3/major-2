@@ -4,7 +4,7 @@ import ErrorHandler from "../middlewares/error.js";
 import { User } from "../models/userSchema.js";
 import { CycleLog } from "../models/cycleLogSchema.js";
 
-const BASE_SYSTEM_PROMPT = `You are SyncoraAI — a warm, empathetic, and knowledgeable AI health companion embedded inside the Syncora menstrual health platform.
+const BASE_SYSTEM_PROMPT = `You are NariCareAI — a warm, empathetic, and knowledgeable AI health companion embedded inside the NariCare menstrual health platform.
 
 Your role:
 • Provide personalised menstrual health care, support, and education.
@@ -39,7 +39,7 @@ const buildUserContext = (user, logs) => {
   logs.forEach((l) =>
     l.symptoms.forEach((s) => {
       symptomCount[s] = (symptomCount[s] || 0) + 1;
-    })
+    }),
   );
   const topSymptoms = Object.entries(symptomCount)
     .sort((a, b) => b[1] - a[1])
@@ -51,7 +51,7 @@ const buildUserContext = (user, logs) => {
   logs.forEach((l) =>
     l.mood.forEach((m) => {
       moodCount[m] = (moodCount[m] || 0) + 1;
-    })
+    }),
   );
   const topMoods = Object.entries(moodCount)
     .sort((a, b) => b[1] - a[1])
@@ -101,8 +101,8 @@ export const chatWithAI = catchAsyncErrors(async (req, res, next) => {
     return next(
       new ErrorHandler(
         "GROQ_API_KEY is missing in backend/config/config.env. Please add it and restart backend.",
-        500
-      )
+        500,
+      ),
     );
   }
 
@@ -118,7 +118,7 @@ export const chatWithAI = catchAsyncErrors(async (req, res, next) => {
 
   const [user, logs] = await Promise.all([
     User.findById(req.user._id).select(
-      "firstname age city avgCycleLength cycleRegularity periodDuration lastPeriodStartDate Medical_Conditions currentMedications"
+      "firstname age city avgCycleLength cycleRegularity periodDuration lastPeriodStartDate Medical_Conditions currentMedications",
     ),
     CycleLog.find({
       user: req.user._id,
@@ -137,7 +137,7 @@ export const chatWithAI = catchAsyncErrors(async (req, res, next) => {
     { role: "system", content: systemPrompt },
     {
       role: "assistant",
-      content: `Understood! I'm SyncoraAI 💜 — your menstrual health companion. I'm here to help you with symptom relief, cycle insights, and wellness tips. How can I support you today? 🌸`,
+      content: `Understood! I'm NariCareAI 💜 — your menstrual health companion. I'm here to help you with symptom relief, cycle insights, and wellness tips. How can I support you today? 🌸`,
     },
   ];
 
@@ -174,8 +174,8 @@ export const chatWithAI = catchAsyncErrors(async (req, res, next) => {
       return next(
         new ErrorHandler(
           "Groq API key is invalid. Please update GROQ_API_KEY in backend/config/config.env and restart the backend.",
-          401
-        )
+          401,
+        ),
       );
     }
 
@@ -184,24 +184,27 @@ export const chatWithAI = catchAsyncErrors(async (req, res, next) => {
       errorMessage.toLowerCase().includes("rate limit")
     ) {
       return next(
-        new ErrorHandler("Groq rate limit reached. Please try again shortly.", 429)
+        new ErrorHandler(
+          "Groq rate limit reached. Please try again shortly.",
+          429,
+        ),
       );
     }
 
     return next(
       new ErrorHandler(
-        "SyncoraAI is temporarily unavailable. Please try again in a moment.",
-        502
-      )
+        "NariCareAI is temporarily unavailable. Please try again in a moment.",
+        502,
+      ),
     );
   }
 
   if (!reply) {
     return next(
       new ErrorHandler(
-        "SyncoraAI could not generate a response right now. Please try again.",
-        502
-      )
+        "NariCareAI could not generate a response right now. Please try again.",
+        502,
+      ),
     );
   }
 

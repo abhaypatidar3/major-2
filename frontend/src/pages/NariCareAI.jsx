@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import { FaPaperPlane, FaRobot, FaUser, FaArrowLeft } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { chatWithSyncoraAI } from "../services/api";
-import "../css/syncoraai.css";
+import { chatWithNariCareAI } from "../services/api";
+import "../css/NariCareai.css";
 
 const QUICK_PROMPTS = [
   "I'm having really bad cramps",
@@ -13,11 +13,11 @@ const QUICK_PROMPTS = [
   "I feel very fatigued on my period",
 ];
 
-const SyncoraAI = () => {
+const NariCareAI = () => {
   const [messages, setMessages] = useState([
     {
       role: "model",
-      text: "Hi there! I'm **SyncoraAI** 💜 — your personal menstrual health companion. I'm here to help you with symptom relief, cycle insights, and wellness tips.\n\nYou can tell me what you're experiencing, or pick a topic below to get started! 🌸",
+      text: "Hi there! I'm **NariCareAI** 💜 — your personal menstrual health companion. I'm here to help you with symptom relief, cycle insights, and wellness tips.\n\nYou can tell me what you're experiencing, or pick a topic below to get started! 🌸",
     },
   ]);
   const [input, setInput] = useState("");
@@ -44,7 +44,7 @@ const SyncoraAI = () => {
         .filter((m) => m.role !== "model" || updatedMessages.indexOf(m) !== 0)
         .map((m) => ({ role: m.role, text: m.text }));
 
-      const { data } = await chatWithSyncoraAI(msg, history);
+      const { data } = await chatWithNariCareAI(msg, history);
       setMessages((prev) => [...prev, { role: "model", text: data.reply }]);
     } catch (error) {
       const apiMessage =
@@ -87,7 +87,7 @@ const SyncoraAI = () => {
               <FaRobot />
             </div>
             <div>
-              <h2>SyncoraAI</h2>
+              <h2>NariCareAI</h2>
               <p>Your health companion</p>
             </div>
           </div>
@@ -123,7 +123,7 @@ const SyncoraAI = () => {
           </Link>
           <div className="sai-topbar-brand">
             <FaRobot />
-            <span>SyncoraAI</span>
+            <span>NariCareAI</span>
           </div>
           <div className="sai-topbar-status">
             <span className="sai-status-dot" />
@@ -205,7 +205,8 @@ const SyncoraAI = () => {
             </button>
           </div>
           <p className="sai-disclaimer">
-            SyncoraAI is an AI assistant and not a substitute for professional medical advice.
+            NariCareAI is an AI assistant and not a substitute for professional
+            medical advice.
           </p>
         </div>
       </main>
@@ -213,4 +214,4 @@ const SyncoraAI = () => {
   );
 };
 
-export default SyncoraAI;
+export default NariCareAI;

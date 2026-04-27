@@ -179,7 +179,7 @@ const RiskPrediction = () => {
             {/* Disclaimer */}
             <div className="rp-disclaimer">{result.disclaimer}</div>
 
-            {/* Find gynaecologist CTA */}
+            {/* Find Gynecologist CTA */}
             {result.risks?.some(
               (r) => r.likelihood === "moderate" || r.likelihood === "high",
             ) && (
@@ -187,8 +187,8 @@ const RiskPrediction = () => {
                 <p>
                   Some patterns were flagged. Consider speaking to a specialist.
                 </p>
-                <Link to="/find-gynaecologists" className="rp-cta-btn">
-                  Find a Gynaecologist →
+                <Link to="/find-Gynecologists" className="rp-cta-btn">
+                  Find a Gynecologist →
                 </Link>
               </div>
             )}

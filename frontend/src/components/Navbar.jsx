@@ -17,7 +17,7 @@ const Navbar = () => {
     <nav className="navbar navbar-expand-md sticky-top">
       <div className="container-fluid">
         <Link className="navbar-brand" to="/">
-          <img width="200px" src="/images/syncoracutout.png" alt="Syncora" />
+          <img width="100px" src="/images/NariCare2.png" alt="NariCare" />
         </Link>
         <button
           className="navbar-toggler"
@@ -40,8 +40,8 @@ const Navbar = () => {
             </Link> */}
             {isAuthenticated ? (
               <>
-                <Link className="nav-link" to="/find-gynaecologists">
-                  Find Gynaecologists
+                <Link className="nav-link" to="/find-Gynecologists">
+                  Find Gynecologists
                 </Link>
 
                 {/* ADD THIS LINE */}

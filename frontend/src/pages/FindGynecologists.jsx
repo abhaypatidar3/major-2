@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { getDoctorsByCity } from "../services/api";
-import "../css/findGynaecologists.css";
+import "../css/findGynecologists.css";
 
 const normalizeCity = (value) => value.trim().toLowerCase();
 const SUPPORTED_CITY_HINTS = [
@@ -55,7 +55,7 @@ const isRelevantGynaeDoctor = (doctor) => {
   return hasInclude && !hasExclude;
 };
 
-const FindGynaecologists = () => {
+const FindGynecologists = () => {
   const { user } = useAuth();
   const profileCity = user?.city?.trim() || "";
   const [selectedCity, setSelectedCity] = useState(profileCity || "");
@@ -118,7 +118,7 @@ const FindGynaecologists = () => {
         <div className="gyn-hero-content">
           <p className="gyn-hero-kicker">Find Nearby Care</p>
           <h1>
-            Top Gynaecologists in <span>{cityLabel || "Your City"}</span>
+            Top Gynecologists in <span>{cityLabel || "Your City"}</span>
           </h1>
           <p>
             Quick access to reputed specialists so you can get timely support
@@ -208,4 +208,4 @@ const FindGynaecologists = () => {
   );
 };
 
-export default FindGynaecologists;
+export default FindGynecologists;

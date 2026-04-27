@@ -14,7 +14,7 @@ export const updateProfile = (formData) => API.put("/user/profile", formData);
 export const getAllSymptoms = () => API.get("/symptoms");
 export const getSymptomById = (id) => API.get(`/symptoms/${id}`);
 
-export const chatWithSyncoraAI = (message, history) =>
+export const chatWithNariCareAI = (message, history) =>
   API.post("/ai/chat", { message, history });
 
 export const getDoctorsByCity = (city, params = {}) =>
