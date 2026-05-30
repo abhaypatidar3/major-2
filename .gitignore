@@ -1,0 +1,9 @@
+# Secrets and environment files
+.env
+.env.*
+**/.env
+**/.env.*
+
+# App config secrets
+backend/config/config.env
+**/config.env
